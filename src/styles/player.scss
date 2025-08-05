@@ -1,0 +1,422 @@
+// 변수 정의
+:root {
+  --player-primary-color: #007bff;
+  --player-secondary-color: #6c757d;
+  --player-background: #000;
+  --player-controls-bg: rgba(0, 0, 0, 0.7);
+  --player-text-color: #fff;
+  --player-border-radius: 4px;
+  --player-transition: all 0.3s ease;
+  --player-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+// 기본 플레이어 스타일
+.custom-video-player {
+  position: relative;
+  background: var(--player-background);
+  border-radius: var(--player-border-radius);
+  overflow: hidden;
+  box-shadow: var(--player-shadow);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  &:focus {
+    outline: 2px solid var(--player-primary-color);
+    outline-offset: 2px;
+  }
+
+  // 비디오 요소
+  .video-element {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: var(--player-background);
+  }
+
+  // 컨트롤 패널
+  .player-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, var(--player-controls-bg));
+    color: var(--player-text-color);
+    opacity: 0;
+    transform: translateY(100%);
+    transition: var(--player-transition);
+    pointer-events: none;
+    padding: 20px 0 0;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+  }
+
+  // 마우스 호버시 컨트롤 표시
+  &:hover .player-controls {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  // 컨트롤 바
+  .controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--player-controls-bg);
+    backdrop-filter: blur(10px);
+  }
+
+  // 버튼 공통 스타일
+  .control-button {
+    background: none;
+    border: none;
+    color: var(--player-text-color);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--player-border-radius);
+    transition: var(--player-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus {
+      outline: 2px solid var(--player-primary-color);
+      outline-offset: 2px;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+  }
+
+  // 재생 버튼
+  .play-button {
+    background: var(--player-primary-color);
+    
+    &:hover {
+      background: rgba(0, 123, 255, 0.8);
+    }
+  }
+
+  // 진행 바 컨테이너
+  .progress-container {
+    flex: 1;
+    margin: 0 12px;
+  }
+
+  // 진행 바
+  .progress-bar {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: height 0.2s ease;
+
+    &:hover {
+      height: 8px;
+      
+      .progress-handle {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  // 진행된 부분
+  .progress-filled {
+    height: 100%;
+    background: var(--player-primary-color);
+    border-radius: 3px;
+    transition: width 0.1s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 120%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 1px;
+    }
+  }
+
+  // 진행 바 핸들
+  .progress-handle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 16px;
+    height: 16px;
+    background: var(--player-primary-color);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      transform: translateY(-50%) scale(1.2);
+    }
+  }
+
+  // 시간 표시
+  .time-display {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--player-text-color);
+    min-width: 120px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // 볼륨 컨테이너
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    &:hover .volume-slider {
+      opacity: 1;
+      width: 80px;
+    }
+  }
+
+  // 볼륨 슬라이더
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--player-primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    &::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--player-primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  // 재생 속도 버튼
+  .rate-button {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 48px;
+  }
+
+  // 전체화면 버튼
+  .fullscreen-button {
+    &:hover {
+      color: var(--player-primary-color);
+    }
+  }
+}
+
+// 전체화면 모드
+.custom-video-player:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.custom-video-player:-moz-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.custom-video-player:fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+// 다크 테마
+.custom-video-player[data-theme="dark"] {
+  --player-background: #1a1a1a;
+  --player-controls-bg: rgba(0, 0, 0, 0.8);
+  --player-text-color: #ffffff;
+}
+
+// 라이트 테마
+.custom-video-player[data-theme="light"] {
+  --player-background: #f8f9fa;
+  --player-controls-bg: rgba(255, 255, 255, 0.9);
+  --player-text-color: #333333;
+  --player-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+// 반응형 디자인
+@media (max-width: 768px) {
+  .custom-video-player {
+    .controls-bar {
+      gap: 8px;
+      padding: 8px 12px;
+    }
+
+    .control-button {
+      min-width: 36px;
+      height: 36px;
+      padding: 6px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .time-display {
+      font-size: 12px;
+      min-width: 100px;
+    }
+
+    .progress-container {
+      margin: 0 8px;
+    }
+
+    .volume-container:hover .volume-slider {
+      width: 60px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-video-player {
+    .controls-bar {
+      gap: 4px;
+      padding: 6px 8px;
+    }
+
+    .control-button {
+      min-width: 32px;
+      height: 32px;
+      padding: 4px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .time-display {
+      font-size: 11px;
+      min-width: 80px;
+    }
+
+    .rate-button {
+      font-size: 12px;
+      min-width: 40px;
+    }
+
+    // 모바일에서는 볼륨 슬라이더 숨김
+    .volume-slider {
+      display: none;
+    }
+  }
+}
+
+// 로딩 스피너
+.custom-video-player .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid var(--player-primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 10;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// 에러 메시지
+.custom-video-player .error-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  padding: 16px 24px;
+  border-radius: var(--player-border-radius);
+  font-size: 14px;
+  text-align: center;
+  z-index: 10;
+  max-width: 80%;
+}
+
+// 접근성 개선
+.custom-video-player {
+  &:focus-within {
+    outline: 2px solid var(--player-primary-color);
+    outline-offset: 2px;
+  }
+}
+
+// 고대비 모드 지원
+@media (prefers-contrast: high) {
+  .custom-video-player {
+    --player-primary-color: #0056b3;
+    --player-controls-bg: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--player-text-color);
+  }
+}
+
+// 애니메이션 감소 모드 지원
+@media (prefers-reduced-motion: reduce) {
+  .custom-video-player * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
