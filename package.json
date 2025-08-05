@@ -1,5 +1,5 @@
 {
-  "name": "custom-video-player",
+  "name": "@your-username/custom-video-player",
   "version": "1.0.0",
   "description": "A modern, customizable video player similar to JWPlayer",
   "main": "dist/player.js",
@@ -12,10 +12,21 @@
     "dev": "webpack serve --mode development",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
+    "build:vercel": "npm run build && cp -r public/* dist/ && cp dist/index.html dist/index.html.bak",
+    "start": "npm run build:vercel && npx serve dist -p ${PORT:-3000}",
+    "preview": "npm run build:vercel && npx serve dist -p 3000",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint && npm run type-check && npm run build",
+    "publish:npm": "./scripts/publish.sh",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags",
+    "release:prerelease": "npm version prerelease && git push --follow-tags",
+    "version": "npm run build && git add dist/",
+    "postversion": "echo 'Version updated. Push tags to trigger release: git push --follow-tags'"
   },
   "keywords": [
     "video",
@@ -28,7 +39,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/custom-video-player.git"
+    "url": "https://github.com/your-username/custom-video-player.git"
+  },
+  "homepage": "https://github.com/your-username/custom-video-player#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/custom-video-player/issues"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
@@ -51,5 +66,8 @@
     "webpack": "^5.80.0",
     "webpack-cli": "^5.1.0",
     "webpack-dev-server": "^4.15.0"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
   }
 }

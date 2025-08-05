@@ -44,13 +44,15 @@ jobs:
         name: build-${{ matrix.node-version }}
         path: dist/
 
-  publish:
+  publish-npm:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 전체 히스토리를 가져와서 태그 정보 확인
     
     - name: Use Node.js 20.x
       uses: actions/setup-node@v4
@@ -62,25 +64,86 @@ jobs:
     - name: Install dependencies
       run: npm ci
     
+    - name: Get package info
+      id: package
+      run: |
+        echo "name=$(node -p "require('./package.json').name")" >> $GITHUB_OUTPUT
+        echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+    
+    - name: Check if version exists on NPM
+      id: version-check
+      run: |
+        if npm view ${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }} > /dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+          echo "Version ${{ steps.package.outputs.version }} already exists on NPM"
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+          echo "Version ${{ steps.package.outputs.version }} does not exist on NPM"
+        fi
+    
+    - name: Run tests
+      run: npm test
+      if: steps.version-check.outputs.exists == 'false'
+    
+    - name: Run linter
+      run: npm run lint
+      if: steps.version-check.outputs.exists == 'false'
+    
+    - name: Run type check
+      run: npm run type-check
+      if: steps.version-check.outputs.exists == 'false'
+    
     - name: Build project
       run: npm run build
+      if: steps.version-check.outputs.exists == 'false'
     
-    - name: Publish to NPM
-      run: npm publish
+    - name: Publish to NPM (Auto)
+      run: |
+        if [[ "${{ steps.package.outputs.name }}" == @* ]]; then
+          npm publish --access public
+        else
+          npm publish
+        fi
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      if: github.event_name == 'push' && contains(github.event.head_commit.message, '[release]')
+      if: |
+        steps.version-check.outputs.exists == 'false' && (
+          contains(github.event.head_commit.message, '[release]') ||
+          contains(github.event.head_commit.message, '[publish]') ||
+          startsWith(github.ref, 'refs/tags/v')
+        )
     
-    - name: Create Release
+    - name: Create GitHub Release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ env.PACKAGE_VERSION }}
-        release_name: Release v${{ env.PACKAGE_VERSION }}
+        tag_name: v${{ steps.package.outputs.version }}
+        release_name: Release v${{ steps.package.outputs.version }}
+        body: |
+          🚀 **${{ steps.package.outputs.name }}** v${{ steps.package.outputs.version }} has been released!
+          
+          ## 📦 Installation
+          ```bash
+          npm install ${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}
+          ```
+          
+          ## 🌐 CDN
+          ```html
+          <script src="https://unpkg.com/${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}/dist/player.min.js"></script>
+          <link rel="stylesheet" href="https://unpkg.com/${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}/dist/player.css">
+          ```
+          
+          ## 📋 Changes
+          See [CHANGELOG.md](./CHANGELOG.md) for detailed changes.
         draft: false
         prerelease: false
-      if: github.event_name == 'push' && contains(github.event.head_commit.message, '[release]')
+      if: |
+        steps.version-check.outputs.exists == 'false' && (
+          contains(github.event.head_commit.message, '[release]') ||
+          contains(github.event.head_commit.message, '[publish]') ||
+          startsWith(github.ref, 'refs/tags/v')
+        )
 
   deploy-cdn:
     needs: test

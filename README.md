@@ -17,13 +17,13 @@ jwplayer와 같은 현대적이고 커스터마이징 가능한 HTML5 비디오 
 
 ### NPM
 ```bash
-npm install custom-video-player
+npm install @your-username/custom-video-player
 ```
 
 ### CDN
 ```html
-<link rel="stylesheet" href="https://unpkg.com/custom-video-player@latest/dist/player.css">
-<script src="https://unpkg.com/custom-video-player@latest/dist/player.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@your-username/custom-video-player@latest/dist/player.css">
+<script src="https://unpkg.com/@your-username/custom-video-player@latest/dist/player.min.js"></script>
 ```
 
 ## 사용법
@@ -48,7 +48,7 @@ player.load('path/to/your/video.mp4');
 ### ES 모듈
 
 ```javascript
-import { createPlayer } from 'custom-video-player';
+import { createPlayer } from '@your-username/custom-video-player';
 
 const player = createPlayer('player-container', {
   width: '100%',
@@ -62,7 +62,7 @@ player.load('https://example.com/video.mp4');
 ### TypeScript
 
 ```typescript
-import { createPlayer, PlayerConfig } from 'custom-video-player';
+import { createPlayer, PlayerConfig } from '@your-username/custom-video-player';
 
 const config: PlayerConfig = {
   width: '800px',
