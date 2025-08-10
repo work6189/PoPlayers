@@ -1,6 +1,6 @@
 import { PoPlayersConfig, PoPlayersState, VideoSource, PoPlayersInstance } from '../types';
 import { PoPlayersEventEmitter } from '../utils/events';
-import { createElement, formatTime, throttle, requestFullscreen, exitFullscreen, isFullscreenSupported } from '../utils/dom';
+import { createElement, throttle, requestFullscreen, exitFullscreen, isFullscreenSupported } from '../utils/dom';
 import { Controls } from './Controls';
 
 export class VideoPlayer extends PoPlayersEventEmitter implements PoPlayersInstance {

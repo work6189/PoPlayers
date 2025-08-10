@@ -1,4 +1,4 @@
-import { PoPlayersEvents, EventListener } from '../types';
+import { PoPlayersEvents } from '../types';
 
 export class EventEmitter<T extends Record<string, (...args: any[]) => void>> {
   private listeners: Map<keyof T, Set<T[keyof T]>> = new Map();
