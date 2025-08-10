@@ -1,5 +1,5 @@
 services:
-  custom-video-player:
+  poplayers:
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,10 +17,10 @@ services:
       start_period: 40s
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.video-player.rule=Host(`your-domain.com`)"
-      - "traefik.http.routers.video-player.tls=true"
-      - "traefik.http.routers.video-player.tls.certresolver=letsencrypt"
-      - "traefik.http.services.video-player.loadbalancer.server.port=3000"
+      - "traefik.http.routers.poplayers.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.poplayers.tls=true"
+      - "traefik.http.routers.poplayers.tls.certresolver=letsencrypt"
+      - "traefik.http.services.poplayers.loadbalancer.server.port=3000"
 
   # 선택사항: Nginx 프록시
   nginx:
@@ -32,7 +32,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./ssl:/etc/nginx/ssl:ro
     depends_on:
-      - custom-video-player
+      - poplayers
     restart: unless-stopped
     profiles:
       - nginx

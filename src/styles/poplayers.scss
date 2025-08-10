@@ -11,7 +11,7 @@
 }
 
 // 기본 플레이어 스타일
-.custom-video-player {
+.poplayers {
   position: relative;
   background: var(--player-background);
   border-radius: var(--player-border-radius);
@@ -260,30 +260,30 @@
 }
 
 // 전체화면 모드
-.custom-video-player:-webkit-full-screen {
+.poplayers:-webkit-full-screen {
   width: 100vw !important;
   height: 100vh !important;
 }
 
-.custom-video-player:-moz-full-screen {
+.poplayers:-moz-full-screen {
   width: 100vw !important;
   height: 100vh !important;
 }
 
-.custom-video-player:fullscreen {
+.poplayers:fullscreen {
   width: 100vw !important;
   height: 100vh !important;
 }
 
 // 다크 테마
-.custom-video-player[data-theme="dark"] {
+.poplayers[data-theme="dark"] {
   --player-background: #1a1a1a;
   --player-controls-bg: rgba(0, 0, 0, 0.8);
   --player-text-color: #ffffff;
 }
 
 // 라이트 테마
-.custom-video-player[data-theme="light"] {
+.poplayers[data-theme="light"] {
   --player-background: #f8f9fa;
   --player-controls-bg: rgba(255, 255, 255, 0.9);
   --player-text-color: #333333;
@@ -292,7 +292,7 @@
 
 // 반응형 디자인
 @media (max-width: 768px) {
-  .custom-video-player {
+  .poplayers {
     .controls-bar {
       gap: 8px;
       padding: 8px 12px;
@@ -325,7 +325,7 @@
 }
 
 @media (max-width: 480px) {
-  .custom-video-player {
+  .poplayers {
     .controls-bar {
       gap: 4px;
       padding: 6px 8px;
@@ -396,7 +396,7 @@
 }
 
 // 접근성 개선
-.custom-video-player {
+.poplayers {
   &:focus-within {
     outline: 2px solid var(--player-primary-color);
     outline-offset: 2px;
@@ -405,7 +405,7 @@
 
 // 고대비 모드 지원
 @media (prefers-contrast: high) {
-  .custom-video-player {
+  .poplayers {
     --player-primary-color: #0056b3;
     --player-controls-bg: rgba(0, 0, 0, 0.9);
     border: 2px solid var(--player-text-color);

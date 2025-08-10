@@ -1,6 +1,6 @@
 # 🚀 Vercel & 운영 서버 배포 가이드
 
-이 문서는 Custom Video Player를 Vercel과 운영 서버에 배포하는 방법을 설명합니다.
+이 문서는 PoPlayers를 Vercel과 운영 서버에 배포하는 방법을 설명합니다.
 
 ## 📋 Vercel 배포
 
@@ -53,16 +53,16 @@ NODE_ENV=production
 
 ```bash
 # 이미지 빌드
-docker build -t custom-video-player .
+docker build -t poplayers .
 
 # 컨테이너 실행
-docker run -d -p 3000:3000 --name video-player custom-video-player
+docker run -d -p 3000:3000 --name poplayers-app poplayers
 
 # 로그 확인
-docker logs video-player
+docker logs poplayers-app
 
 # 컨테이너 중지
-docker stop video-player
+docker stop poplayers-app
 ```
 
 ### 2. Docker Compose를 사용한 배포

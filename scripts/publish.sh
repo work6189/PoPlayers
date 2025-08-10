@@ -49,7 +49,7 @@ echo "🔍 패키지 이름 중복을 확인합니다..."
 if npm view "$PACKAGE_NAME" > /dev/null 2>&1; then
     echo "⚠️  경고: '$PACKAGE_NAME' 패키지가 이미 존재합니다."
     echo "package.json에서 패키지 이름을 변경하거나 스코프를 사용하세요."
-    echo "예: @your-username/custom-video-player"
+    echo "예: @your-username/poplayers"
     exit 1
 fi
 
@@ -107,7 +107,7 @@ echo "🔨 프로덕션 빌드를 실행합니다..."
 npm run build
 
 # 빌드 파일 확인
-if [ ! -f "dist/player.min.js" ] || [ ! -f "dist/player.css" ]; then
+if [ ! -f "dist/poplayers.min.js" ] || [ ! -f "dist/poplayers.css" ]; then
     echo "❌ 빌드 파일이 생성되지 않았습니다."
     exit 1
 fi

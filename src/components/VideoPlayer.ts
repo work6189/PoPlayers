@@ -1,16 +1,16 @@
-import { PlayerConfig, PlayerState, VideoSource, PlayerInstance } from '../types';
-import { PlayerEventEmitter } from '../utils/events';
+import { PoPlayersConfig, PoPlayersState, VideoSource, PoPlayersInstance } from '../types';
+import { PoPlayersEventEmitter } from '../utils/events';
 import { createElement, formatTime, throttle, requestFullscreen, exitFullscreen, isFullscreenSupported } from '../utils/dom';
 import { Controls } from './Controls';
 
-export class VideoPlayer extends PlayerEventEmitter implements PlayerInstance {
+export class VideoPlayer extends PoPlayersEventEmitter implements PoPlayersInstance {
   private container: HTMLElement;
   private videoElement!: HTMLVideoElement;
   private controls!: Controls;
-  private config: Required<PlayerConfig>;
+  private config: Required<PoPlayersConfig>;
   private isDestroyed = false;
 
-  constructor(containerId: string | HTMLElement, config: PlayerConfig = {}) {
+  constructor(containerId: string | HTMLElement, config: PoPlayersConfig = {}) {
     super();
 
     // 기본 설정
@@ -57,7 +57,7 @@ export class VideoPlayer extends PlayerEventEmitter implements PlayerInstance {
   }
 
   private setupContainer(): void {
-    this.container.classList.add('custom-video-player');
+    this.container.classList.add('poplayers');
     this.container.style.position = 'relative';
     this.container.style.width = typeof this.config.width === 'number' 
       ? `${this.config.width}px` 
@@ -225,7 +225,7 @@ export class VideoPlayer extends PlayerEventEmitter implements PlayerInstance {
     exitFullscreen();
   }
 
-  getState(): PlayerState {
+  getState(): PoPlayersState {
     if (this.isDestroyed) {
       return {
         isPlaying: false,
@@ -283,7 +283,7 @@ export class VideoPlayer extends PlayerEventEmitter implements PlayerInstance {
     return this.container;
   }
 
-  getConfig(): Required<PlayerConfig> {
+  getConfig(): Required<PoPlayersConfig> {
     return { ...this.config };
   }
 }

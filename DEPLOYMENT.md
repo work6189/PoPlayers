@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide
 
-이 문서는 Custom Video Player 패키지를 NPM에 배포하는 방법을 설명합니다.
+이 문서는 PoPlayers 패키지를 NPM에 배포하는 방법을 설명합니다.
 
 ## 📋 사전 준비
 
@@ -22,10 +22,10 @@
 
 ```json
 {
-  "name": "@your-username/custom-video-player",
+  "name": "@your-username/poplayers",
   "author": "Your Name <your.email@example.com>",
   "repository": {
-    "url": "https://github.com/your-username/custom-video-player.git"
+    "url": "https://github.com/your-username/poplayers.git"
   }
 }
 ```

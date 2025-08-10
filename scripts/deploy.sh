@@ -3,7 +3,7 @@
 # 배포 스크립트
 set -e
 
-echo "🚀 Custom Video Player 배포 시작..."
+echo "🚀 PoPlayers 배포 시작..."
 
 # 버전 확인
 VERSION=$(node -p "require('./package.json').version")
@@ -14,7 +14,7 @@ echo "🔨 프로젝트 빌드 중..."
 npm run build
 
 # 파일 검증
-if [ ! -f "dist/player.min.js" ] || [ ! -f "dist/player.css" ]; then
+if [ ! -f "dist/poplayers.min.js" ] || [ ! -f "dist/poplayers.css" ]; then
     echo "❌ 빌드 파일이 없습니다."
     exit 1
 fi
@@ -50,5 +50,5 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo "🎉 배포가 완료되었습니다!"
-echo "📍 NPM: https://www.npmjs.com/package/custom-video-player"
-echo "📍 CDN: https://unpkg.com/custom-video-player@$VERSION/dist/"
+echo "📍 NPM: https://www.npmjs.com/package/poplayers"
+echo "📍 CDN: https://unpkg.com/poplayers@$VERSION/dist/"

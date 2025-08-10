@@ -1,4 +1,4 @@
-export interface PlayerConfig {
+export interface PoPlayersConfig {
   width?: string | number;
   height?: string | number;
   controls?: boolean;
@@ -14,7 +14,7 @@ export interface PlayerConfig {
   responsive?: boolean;
 }
 
-export interface PlayerEvents {
+export interface PoPlayersEvents {
   'ready': () => void;
   'play': () => void;
   'pause': () => void;
@@ -39,7 +39,7 @@ export interface VideoSource {
   default?: boolean;
 }
 
-export interface PlayerState {
+export interface PoPlayersState {
   isPlaying: boolean;
   isPaused: boolean;
   isEnded: boolean;
@@ -64,9 +64,9 @@ export interface ControlsConfig {
   quality?: boolean;
 }
 
-export type EventListener<T extends keyof PlayerEvents> = PlayerEvents[T];
+export type EventListener<T extends keyof PoPlayersEvents> = PoPlayersEvents[T];
 
-export interface PlayerInstance {
+export interface PoPlayersInstance {
   play(): Promise<void>;
   pause(): void;
   stop(): void;
@@ -77,7 +77,7 @@ export interface PlayerInstance {
   enterFullscreen(): void;
   exitFullscreen(): void;
   destroy(): void;
-  on<T extends keyof PlayerEvents>(event: T, listener: EventListener<T>): void;
-  off<T extends keyof PlayerEvents>(event: T, listener: EventListener<T>): void;
-  getState(): PlayerState;
+  on<T extends keyof PoPlayersEvents>(event: T, listener: EventListener<T>): void;
+  off<T extends keyof PoPlayersEvents>(event: T, listener: EventListener<T>): void;
+  getState(): PoPlayersState;
 }

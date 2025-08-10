@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Video Player Demo</title>
+    <title>PoPlayers Demo</title>
 </head>
 <body>
     <div id="app">
-        <h1>Custom Video Player Demo</h1>
-        <div id="player-container" style="width: 800px; height: 450px; margin: 20px auto;"></div>
+        <h1>PoPlayers Demo</h1>
+        <div id="poplayers-container" style="width: 800px; height: 450px; margin: 20px auto;"></div>
         
         <div style="text-align: center; margin: 20px;">
             <h3>테스트 비디오 URL:</h3>
@@ -23,23 +23,23 @@
     </div>
 
     <script>
-        let player;
+        let poplayers;
         
         document.addEventListener('DOMContentLoaded', function() {
             // 플레이어 초기화 - 팩토리 함수 사용
             try {
-                if (typeof CustomVideoPlayer !== 'undefined') {
+                if (typeof PoPlayers !== 'undefined') {
                     // 생성자 함수로 호출 (new 키워드 사용)
-                    player = new CustomVideoPlayer('player-container', {
+                    poplayers = new PoPlayers('poplayers-container', {
                         width: '100%',
                         height: '100%',
                         controls: true,
                         autoplay: false,
                         muted: false
                     });
-                } else if (typeof window.CustomVideoPlayer !== 'undefined') {
+                } else if (typeof window.PoPlayers !== 'undefined') {
                     // 윈도우 객체에서 생성자 함수로 호출
-                    player = new window.CustomVideoPlayer('player-container', {
+                    poplayers = new window.PoPlayers('poplayers-container', {
                         width: '100%',
                         height: '100%',
                         controls: true,
@@ -47,55 +47,55 @@
                         muted: false
                     });
                 } else {
-                    console.error('CustomVideoPlayer is not available');
-                    alert('플레이어를 로드할 수 없습니다. 페이지를 새로고침해주세요.');
+                    console.error('PoPlayers is not available');
+                    alert('PoPlayers를 로드할 수 없습니다. 페이지를 새로고침해주세요.');
                     return;
                 }
             } catch (error) {
-                console.error('플레이어 초기화 에러:', error);
-                alert('플레이어 초기화에 실패했습니다: ' + error.message);
+                console.error('PoPlayers 초기화 에러:', error);
+                alert('PoPlayers 초기화에 실패했습니다: ' + error.message);
                 return;
             }
             
-            // 플레이어가 준비되었을 때 이벤트 리스너 추가
-            player.on('ready', function() {
-                console.log('플레이어가 준비되었습니다!');
+            // PoPlayers가 준비되었을 때 이벤트 리스너 추가
+            poplayers.on('ready', function() {
+                console.log('PoPlayers가 준비되었습니다!');
             });
             
-            player.on('error', function(error) {
-                console.error('플레이어 에러:', error);
+            poplayers.on('error', function(error) {
+                console.error('PoPlayers 에러:', error);
             });
         });
         
         function loadVideo() {
-            if (!player) {
-                alert('플레이어가 초기화되지 않았습니다.');
+            if (!poplayers) {
+                alert('PoPlayers가 초기화되지 않았습니다.');
                 return;
             }
             const url = document.getElementById('video-url').value;
             if (url) {
-                player.load(url);
+                poplayers.load(url);
             } else {
                 alert('비디오 URL을 입력해주세요.');
             }
         }
         
         function testHLS() {
-            if (!player) {
-                alert('플레이어가 초기화되지 않았습니다.');
+            if (!poplayers) {
+                alert('PoPlayers가 초기화되지 않았습니다.');
                 return;
             }
             // HLS 테스트 URL (실제 사용시 유효한 URL로 변경)
-            player.load('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
+            poplayers.load('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
         }
         
         function testMP4() {
-            if (!player) {
-                alert('플레이어가 초기화되지 않았습니다.');
+            if (!poplayers) {
+                alert('PoPlayers가 초기화되지 않았습니다.');
                 return;
             }
             // MP4 테스트 URL (실제 사용시 유효한 URL로 변경)
-            player.load('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+            poplayers.load('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
         }
     </script>
 </body>

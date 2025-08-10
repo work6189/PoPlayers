@@ -1,4 +1,4 @@
-import { PlayerEvents, EventListener } from '../types';
+import { PoPlayersEvents, EventListener } from '../types';
 
 export class EventEmitter<T extends Record<string, (...args: any[]) => void>> {
   private listeners: Map<keyof T, Set<T[keyof T]>> = new Map();
@@ -47,6 +47,6 @@ export class EventEmitter<T extends Record<string, (...args: any[]) => void>> {
   }
 }
 
-export class PlayerEventEmitter extends EventEmitter<PlayerEvents & Record<string, (...args: any[]) => void>> {
-  // PlayerEvents에 특화된 추가 메서드들을 여기에 구현할 수 있습니다
+export class PoPlayersEventEmitter extends EventEmitter<PoPlayersEvents & Record<string, (...args: any[]) => void>> {
+  // PoPlayersEvents에 특화된 추가 메서드들을 여기에 구현할 수 있습니다
 }

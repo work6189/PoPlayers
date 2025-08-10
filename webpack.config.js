@@ -9,9 +9,9 @@ module.exports = (env, argv) => {
     entry: './src/index.ts',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: isProduction ? 'player.min.js' : 'player.js',
+      filename: isProduction ? 'poplayers.min.js' : 'poplayers.js',
       library: {
-        name: 'CustomVideoPlayer',
+        name: 'PoPlayers',
         type: 'umd',
         export: 'default'
       },
@@ -54,7 +54,7 @@ module.exports = (env, argv) => {
       }),
       ...(isProduction ? [
         new MiniCssExtractPlugin({
-          filename: 'player.css'
+          filename: 'poplayers.css'
         })
       ] : [])
     ],

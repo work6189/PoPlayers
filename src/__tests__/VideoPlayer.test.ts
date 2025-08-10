@@ -3,7 +3,7 @@
  */
 
 import { VideoPlayer } from '../components/VideoPlayer';
-import { PlayerConfig } from '../types';
+import { PoPlayersConfig } from '../types';
 
 // Mock HTML5 video element
 Object.defineProperty(HTMLMediaElement.prototype, 'play', {
@@ -47,7 +47,7 @@ describe('VideoPlayer', () => {
     });
 
     it('should create player with custom config', () => {
-      const config: PlayerConfig = {
+      const config: PoPlayersConfig = {
         width: '800px',
         height: '450px',
         autoplay: true,
