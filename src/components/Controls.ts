@@ -1,10 +1,10 @@
-import { PlayerConfig } from '../types';
+import { PoPlayersConfig } from '../types';
 import { createElement, formatTime, throttle } from '../utils/dom';
 import { VideoPlayer } from './VideoPlayer';
 
 export class Controls {
   private player: VideoPlayer;
-  private config: Required<PlayerConfig>;
+  private config: Required<PoPlayersConfig>;
   private controlsElement!: HTMLElement;
   private playButton!: HTMLButtonElement;
   private progressBar!: HTMLElement;
@@ -18,7 +18,7 @@ export class Controls {
   private isVisible = true;
   private hideTimeout: NodeJS.Timeout | null = null;
 
-  constructor(player: VideoPlayer, config: Required<PlayerConfig>) {
+  constructor(player: VideoPlayer, config: Required<PoPlayersConfig>) {
     this.player = player;
     this.config = config;
     this.createControls();
