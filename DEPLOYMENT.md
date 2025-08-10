@@ -125,7 +125,7 @@ npm run publish:npm
 2. **버전 충돌**:
    ```bash
    # 현재 NPM 버전 확인
-   npm view @your-username/custom-video-player version
+   npm view @work6189/poplayer version
    
    # 로컬 버전 확인
    npm version
@@ -152,15 +152,15 @@ npm run publish:npm
 ### 1. NPM 패키지 확인
 ```bash
 # 패키지 정보 확인
-npm view @your-username/custom-video-player
+npm view @work6189/poplayer
 
 # 설치 테스트
-npm install @your-username/custom-video-player
+npm install @work6189/poplayer
 ```
 
 ### 2. CDN 링크 확인
-- https://unpkg.com/@your-username/custom-video-player@latest/
-- https://cdn.jsdelivr.net/npm/@your-username/custom-video-player@latest/
+- https://unpkg.com/@work6189/poplayer@latest/
+- https://cdn.jsdelivr.net/npm/@work6189/poplayer@latest/
 
 ### 3. GitHub Release 확인
 - Repository → Releases에서 새 릴리스 확인
