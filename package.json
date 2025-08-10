@@ -1,5 +1,5 @@
 {
-  "name": "@your-username/poplayers",
+  "name": "@work6189/poplayers",
   "version": "1.0.0",
   "description": "A modern, customizable video PoPlayers similar to JWPlayer",
   "main": "dist/poplayers.js",
@@ -39,11 +39,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/poplayers.git"
+    "url": "https://github.com/work6189/poplayers.git"
   },
-  "homepage": "https://github.com/your-username/poplayers#readme",
+  "homepage": "https://github.com/work6189/poplayers#readme",
   "bugs": {
-    "url": "https://github.com/your-username/poplayers/issues"
+    "url": "https://github.com/work6189/poplayers/issues"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
