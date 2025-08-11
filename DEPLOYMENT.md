@@ -22,7 +22,7 @@
 
 ```json
 {
-  "name": "@your-username/poplayers",
+  "name": "@work6189/poplayers",
   "author": "Your Name <your.email@example.com>",
   "repository": {
     "url": "https://github.com/your-username/poplayers.git"

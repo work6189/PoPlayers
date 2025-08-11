@@ -49,7 +49,7 @@ echo "🔍 패키지 이름 중복을 확인합니다..."
 if npm view "$PACKAGE_NAME" > /dev/null 2>&1; then
     echo "⚠️  경고: '$PACKAGE_NAME' 패키지가 이미 존재합니다."
     echo "package.json에서 패키지 이름을 변경하거나 스코프를 사용하세요."
-    echo "예: @your-username/poplayers"
+    echo "예: @work6189/poplayers"
     exit 1
 fi
 
@@ -140,7 +140,11 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         # 실제 배포
-        npm publish
+        if [[ "$PACKAGE_NAME" == @* ]]; then
+            npm publish --access public
+        else
+            npm publish
+        fi
         
         FINAL_VERSION=$(node -p "require('./package.json').version")
         echo ""

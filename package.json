@@ -1,6 +1,6 @@
 {
   "name": "@work6189/poplayers",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A modern, customizable video PoPlayers similar to JWPlayer",
   "main": "dist/poplayers.js",
   "module": "dist/poplayers.esm.js",
@@ -44,6 +44,9 @@
   "homepage": "https://github.com/work6189/poplayers#readme",
   "bugs": {
     "url": "https://github.com/work6189/poplayers/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",

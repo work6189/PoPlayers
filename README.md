@@ -17,13 +17,13 @@ jwplayer와 같은 현대적이고 커스터마이징 가능한 HTML5 비디오 
 
 ### NPM
 ```bash
-npm install @your-username/poplayers
+npm install @work6189/poplayers
 ```
 
 ### CDN
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@your-username/poplayers@latest/dist/poplayers.css">
-<script src="https://unpkg.com/@your-username/poplayers@latest/dist/poplayers.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@work6189/poplayers@latest/dist/poplayers.css">
+<script src="https://unpkg.com/@work6189/poplayers@latest/dist/poplayers.min.js"></script>
 ```
 
 ## 사용법
@@ -48,7 +48,7 @@ poplayers.load('path/to/your/video.mp4');
 ### ES 모듈
 
 ```javascript
-import { createPoPlayers } from '@your-username/poplayers';
+import { createPoPlayers } from '@work6189/poplayers';
 
 const poplayers = createPoPlayers('poplayers-container', {
   width: '100%',
@@ -62,7 +62,7 @@ poplayers.load('https://example.com/video.mp4');
 ### TypeScript
 
 ```typescript
-import { createPoPlayers, PoPlayersConfig } from '@your-username/poplayers';
+import { createPoPlayers, PoPlayersConfig } from '@work6189/poplayers';
 
 const config: PoPlayersConfig = {
   width: '800px',
