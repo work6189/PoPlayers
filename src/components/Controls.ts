@@ -107,6 +107,29 @@ export class Controls {
       this.player.seek(seekTime);
     });
 
+    // 진행 바 마우스 호버 - 동적 핸들 위치 표시
+    this.progressBar.addEventListener('mousemove', (e) => {
+      const rect = this.progressBar.getBoundingClientRect();
+      const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      
+      // 호버 핸들 위치 업데이트 (마우스 위치에 정확히 맞춤)
+      this.progressHandle.style.left = `${percent * 100}%`;
+      this.progressHandle.style.opacity = '1';
+      this.progressHandle.style.transform = 'translateY(-50%) translateX(-50%) scale(1)';
+    });
+
+    // 진행 바에서 마우스가 벗어날 때 원래 위치로 복원
+    this.progressBar.addEventListener('mouseleave', () => {
+      // 현재 재생 위치로 핸들 복원
+      const state = this.player.getState();
+      if (state.duration > 0) {
+        const currentPercent = (state.currentTime / state.duration) * 100;
+        this.progressHandle.style.left = `${currentPercent}%`;
+      }
+      this.progressHandle.style.opacity = '0';
+      this.progressHandle.style.transform = 'translateY(-50%) translateX(-50%) scale(0)';
+    });
+
     // 진행 바 드래그
     let isDragging = false;
     this.progressHandle.addEventListener('mousedown', () => {
@@ -120,11 +143,22 @@ export class Controls {
       const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       const state = this.player.getState();
       const seekTime = percent * state.duration;
+      
+      // 드래그 중일 때 핸들 위치 업데이트
+      this.progressHandle.style.left = `${percent * 100}%`;
+      this.progressHandle.style.opacity = '1';
+      this.progressHandle.style.transform = 'translateY(-50%) translateX(-50%) scale(1.2)';
+      
       this.player.seek(seekTime);
     });
 
     document.addEventListener('mouseup', () => {
-      isDragging = false;
+      if (isDragging) {
+        isDragging = false;
+        // 드래그 완료 후 핸들 숨기기
+        this.progressHandle.style.opacity = '0';
+        this.progressHandle.style.transform = 'translateY(-50%) translateX(-50%) scale(0)';
+      }
     });
 
     // 볼륨 버튼
@@ -246,7 +280,12 @@ export class Controls {
     if (state.duration > 0) {
       const percent = (currentTime / state.duration) * 100;
       this.progressFilled.style.width = `${percent}%`;
-      this.progressHandle.style.left = `${percent}%`;
+      
+      // 마우스 호버 중이 아닐 때만 핸들 위치 업데이트
+      if (!this.progressBar.matches(':hover')) {
+        this.progressHandle.style.left = `${percent}%`;
+        this.progressHandle.style.transform = 'translateY(-50%) translateX(-50%) scale(0)';
+      }
     }
     this.updateTimeDisplay(currentTime, state.duration);
   }

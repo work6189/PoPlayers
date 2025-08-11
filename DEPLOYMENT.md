@@ -20,15 +20,6 @@
 
 `package.json`에서 다음 정보를 실제 값으로 변경:
 
-```json
-{
-  "name": "@work6189/poplayers",
-  "author": "Your Name <your.email@example.com>",
-  "repository": {
-    "url": "https://github.com/your-username/poplayers.git"
-  }
-}
-```
 
 ## 🎯 배포 방법
 

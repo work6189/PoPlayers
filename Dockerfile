@@ -14,7 +14,7 @@ RUN npm ci --ignore-scripts
 COPY . .
 
 # 빌드 실행
-RUN npm run build:vercel
+RUN npm run build
 
 # 프로덕션 스테이지
 FROM node:20-alpine AS production
