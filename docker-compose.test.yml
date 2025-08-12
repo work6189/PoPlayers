@@ -1,0 +1,169 @@
+# Node.js 버전별 테스트를 위한 Docker Compose 설정
+# 사용법: docker-compose -f docker-compose.test.yml up [서비스명]
+
+services:
+  # Node.js 18 테스트 환경 (LTS)
+  test-node18:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "18"
+    ports:
+      - "3018:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Node.js 20 테스트 환경 (LTS, 기본)
+  test-node20:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "20"
+    ports:
+      - "3020:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Node.js 22 테스트 환경 (LTS)
+  test-node22:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "22"
+    ports:
+      - "3022:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+  # 테스트 실행 전용 서비스
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "20"
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm test
+    profiles:
+      - test
+
+  # 린터 실행 전용 서비스
+  lint-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "20"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run lint
+    profiles:
+      - lint
+
+  # 타입 체크 실행 전용 서비스
+  typecheck-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "20"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run type-check
+    profiles:
+      - typecheck
+
+  # 빌드 테스트 전용 서비스 (LTS 버전별)
+  build-test-node18:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "18"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run build
+    profiles:
+      - build-test
+
+  build-test-node20:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "20"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run build
+    profiles:
+      - build-test
+
+  build-test-node22:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        NODE_VERSION: "22"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run build
+    profiles:
+      - build-test
+
+

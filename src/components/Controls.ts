@@ -271,6 +271,14 @@ export class Controls {
           e.preventDefault();
           this.volumeButton.click();
           break;
+        case 'BracketLeft': // [ 키
+          e.preventDefault();
+          this.decreasePlaybackRate();
+          break;
+        case 'BracketRight': // ] 키
+          e.preventDefault();
+          this.increasePlaybackRate();
+          break;
       }
     });
   }
@@ -322,6 +330,20 @@ export class Controls {
     const container = this.player.getContainer();
     return container.contains(document.activeElement) || 
            document.activeElement === container;
+  }
+
+  private decreasePlaybackRate(): void {
+    const currentRate = this.player.getState().playbackRate;
+    const newRate = Math.max(0.25, currentRate - 0.25);
+    this.player.setPlaybackRate(newRate);
+    this.playbackRateButton.textContent = `${newRate}x`;
+  }
+
+  private increasePlaybackRate(): void {
+    const currentRate = this.player.getState().playbackRate;
+    const newRate = Math.min(3, currentRate + 0.25);
+    this.player.setPlaybackRate(newRate);
+    this.playbackRateButton.textContent = `${newRate}x`;
   }
 
   // 아이콘 SVG 문자열들

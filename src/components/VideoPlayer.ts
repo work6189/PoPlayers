@@ -65,6 +65,10 @@ export class VideoPlayer extends PoPlayersEventEmitter implements PoPlayersInsta
     this.container.style.height = typeof this.config.height === 'number' 
       ? `${this.config.height}px` 
       : this.config.height;
+    
+    // 포커스 가능하도록 tabindex 추가
+    this.container.tabIndex = 0;
+    this.container.style.outline = 'none';
   }
 
   private createVideoElement(): void {
@@ -136,6 +140,11 @@ export class VideoPlayer extends PoPlayersEventEmitter implements PoPlayersInsta
     });
     document.addEventListener('MSFullscreenChange', () => {
       this.emit('fullscreenchange', !!(document as any).msFullscreenElement);
+    });
+
+    // 컨테이너 클릭 시 포커스
+    this.container.addEventListener('click', () => {
+      this.container.focus();
     });
   }
 
